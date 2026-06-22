@@ -34,7 +34,7 @@ export default function Home() {
       duration: 1.1,
     });
 
-    let rafId = 0;
+    let rafId: number;
     const raf = (time: number) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);

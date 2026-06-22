@@ -10,6 +10,17 @@ type ProductCardProps = {
   image: string;
 };
 
+const TITLE_HOVER_Y = -10;
+const TITLE_HOVER_SCALE_FACTOR = 1.01;
+const META_HOVER_Y = -8;
+const HOVER_DURATION = 0.35;
+const MEDIA_SCALE = 1.05;
+const MEDIA_DURATION = 0.45;
+const ROTATE_X_STRENGTH = -12;
+const ROTATE_Y_STRENGTH = 14;
+const SHIFT_X_FACTOR = 0.05;
+const SHIFT_Y_FACTOR = 0.04;
+
 export default function ProductCard({ title, category, description, image }: ProductCardProps) {
   const cardRef = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -27,9 +38,13 @@ export default function ProductCard({ title, category, description, image }: Pro
 
     const hoverTl = gsap.timeline({ paused: true });
     hoverTl
-      .to(titleNode, { y: -10, letterSpacing: "0.14em", scale: 1.01, duration: 0.35, ease: "power3.out" }, 0)
-      .to(metaNode, { y: -8, opacity: 0.95, duration: 0.35, ease: "power3.out" }, 0)
-      .to(media, { scale: 1.05, duration: 0.45, ease: "power3.out" }, 0);
+      .to(
+        titleNode,
+        { y: TITLE_HOVER_Y, letterSpacing: "0.14em", scale: TITLE_HOVER_SCALE_FACTOR, duration: HOVER_DURATION, ease: "power3.out" },
+        0,
+      )
+      .to(metaNode, { y: META_HOVER_Y, opacity: 0.95, duration: HOVER_DURATION, ease: "power3.out" }, 0)
+      .to(media, { scale: MEDIA_SCALE, duration: MEDIA_DURATION, ease: "power3.out" }, 0);
 
     const rotateX = gsap.quickTo(card, "rotationX", { duration: 0.35, ease: "power2.out" });
     const rotateY = gsap.quickTo(card, "rotationY", { duration: 0.35, ease: "power2.out" });
@@ -52,13 +67,13 @@ export default function ProductCard({ title, category, description, image }: Pro
       const y = event.clientY - rect.top;
       const px = (x / rect.width) * 100;
       const py = (y / rect.height) * 100;
-      const rotateAmountX = ((y - rect.height / 2) / rect.height) * -12;
-      const rotateAmountY = ((x - rect.width / 2) / rect.width) * 14;
+      const rotateAmountX = ((y - rect.height / 2) / rect.height) * ROTATE_X_STRENGTH;
+      const rotateAmountY = ((x - rect.width / 2) / rect.width) * ROTATE_Y_STRENGTH;
 
       rotateX(rotateAmountX);
       rotateY(rotateAmountY);
-      shiftX((x - rect.width / 2) * 0.05);
-      shiftY((y - rect.height / 2) * 0.04);
+      shiftX((x - rect.width / 2) * SHIFT_X_FACTOR);
+      shiftY((y - rect.height / 2) * SHIFT_Y_FACTOR);
       overlay.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.36), rgba(0,0,0,0.78) 56%)`;
     };
 
@@ -71,6 +86,7 @@ export default function ProductCard({ title, category, description, image }: Pro
       card.removeEventListener("mouseleave", onLeave);
       card.removeEventListener("mousemove", onMove);
       hoverTl.kill();
+      gsap.set([titleNode, metaNode, media], { clearProps: "all" });
     };
   }, []);
 

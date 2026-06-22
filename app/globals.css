@@ -8,8 +8,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Inter", "Arial", sans-serif;
-  --font-mono: "JetBrains Mono", "Menlo", monospace;
+  --font-sans: "Arial", "Helvetica", sans-serif;
+  --font-mono: "Menlo", "Monaco", monospace;
   --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-brutal: cubic-bezier(0.76, 0, 0.24, 1);
 }
@@ -31,4 +31,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+body.scroll-locked {
+  overflow: hidden;
 }

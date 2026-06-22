@@ -7,6 +7,11 @@ import { Flip } from "gsap/Flip";
 
 gsap.registerPlugin(ScrollTrigger, Flip);
 
+const HERO_SCALE_TARGET = 5.2;
+const HERO_OPACITY_TARGET = 0.28;
+const CURSOR_SIZE = 240;
+const CURSOR_HALF = CURSOR_SIZE / 2;
+
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const logoRef = useRef<HTMLHeadingElement>(null);
@@ -33,7 +38,7 @@ export default function HeroSection() {
             anticipatePin: 1,
           },
         })
-        .to(logo, { scale: 5.2, opacity: 0.28, ease: "none" }, 0)
+        .to(logo, { scale: HERO_SCALE_TARGET, opacity: HERO_OPACITY_TARGET, ease: "none" }, 0)
         .to(bg, { scale: 1.18, filter: "brightness(1.15)", ease: "none" }, 0);
     }, section);
 
@@ -48,8 +53,8 @@ export default function HeroSection() {
       const localY = event.clientY - rect.top;
       section.style.setProperty("--pointer-x", `${(localX / rect.width) * 100}%`);
       section.style.setProperty("--pointer-y", `${(localY / rect.height) * 100}%`);
-      quickX(event.clientX - 120);
-      quickY(event.clientY - 120);
+      quickX(event.clientX - CURSOR_HALF);
+      quickY(event.clientY - CURSOR_HALF);
     };
 
     window.addEventListener("mousemove", onMove);
@@ -71,9 +76,9 @@ export default function HeroSection() {
   }, [isLocked]);
 
   useEffect(() => {
-    document.body.style.overflow = isLocked ? "hidden" : "";
+    document.body.classList.toggle("scroll-locked", isLocked);
     return () => {
-      document.body.style.overflow = "";
+      document.body.classList.remove("scroll-locked");
     };
   }, [isLocked]);
 
