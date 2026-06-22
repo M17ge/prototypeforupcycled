@@ -33,7 +33,7 @@ export default function Home() {
       duration: 1.1,
     });
 
-    let rafId: number;
+    let rafId: number | null = null;
     const raf = (time: number) => {
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
@@ -42,7 +42,9 @@ export default function Home() {
     rafId = requestAnimationFrame(raf);
 
     return () => {
-      cancelAnimationFrame(rafId);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
       lenis.destroy();
     };
   }, []);
