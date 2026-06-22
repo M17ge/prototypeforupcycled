@@ -20,6 +20,22 @@ export default function HeroSection() {
   const lockBadgeRef = useRef<HTMLButtonElement>(null);
   const [isLocked, setIsLocked] = useState(false);
 
+  const handleLockToggle = () => {
+    const badge = lockBadgeRef.current;
+    if (!badge) {
+      setIsLocked((value) => !value);
+      return;
+    }
+    const state = Flip.getState(badge);
+    setIsLocked((value) => !value);
+    requestAnimationFrame(() => {
+      Flip.from(state, {
+        duration: 0.45,
+        ease: "power3.inOut",
+      });
+    });
+  };
+
   useEffect(() => {
     const section = sectionRef.current;
     const logo = logoRef.current;
@@ -67,15 +83,6 @@ export default function HeroSection() {
   }, []);
 
   useEffect(() => {
-    if (!lockBadgeRef.current) return;
-    const state = Flip.getState(lockBadgeRef.current);
-    Flip.from(state, {
-      duration: 0.45,
-      ease: "power3.inOut",
-    });
-  }, [isLocked]);
-
-  useEffect(() => {
     document.body.classList.toggle("scroll-locked", isLocked);
     return () => {
       document.body.classList.remove("scroll-locked");
@@ -112,7 +119,7 @@ export default function HeroSection() {
           <button
             ref={lockBadgeRef}
             type="button"
-            onClick={() => setIsLocked((value) => !value)}
+            onClick={handleLockToggle}
             className={`border px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-all ${
               isLocked
                 ? "border-zinc-100 bg-zinc-100 text-black"
