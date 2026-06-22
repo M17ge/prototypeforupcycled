@@ -7,18 +7,21 @@ import ProductCard from "@/components/ProductCard";
 
 const rackProducts = [
   {
+    id: "distressed-selvedge-shell",
     title: "Distressed Selvedge Shell",
     category: "Customized Denim",
     description: "Raw indigo paneling with reconstructed seams.",
     image: "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1400&q=80",
   },
   {
+    id: "reframed-street-sole",
     title: "Reframed Street Sole",
     category: "Footwear",
     description: "Rebuilt upper wrapped in heavyweight denim scraps.",
     image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1400&q=80",
   },
   {
+    id: "cutline-impact-case",
     title: "Cutline Impact Case",
     category: "Lifestyle Hardware",
     description: "Matte black shell with stitched edge texture mapping.",
@@ -62,7 +65,7 @@ export default function Home() {
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {rackProducts.map((product) => (
-            <ProductCard key={product.title} {...product} />
+            <ProductCard key={product.id} {...product} />
           ))}
         </div>
       </section>

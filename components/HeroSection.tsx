@@ -112,6 +112,7 @@ export default function HeroSection() {
 
       <div
         ref={cursorRef}
+        aria-hidden="true"
         className="pointer-events-none fixed left-0 top-0 z-40 h-56 w-56 rounded-full bg-white/12 opacity-70 mix-blend-screen blur-3xl"
       />
 
@@ -122,6 +123,7 @@ export default function HeroSection() {
             ref={lockBadgeRef}
             type="button"
             onClick={handleLockToggle}
+            aria-pressed={isLocked}
             className={`border px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 ${
               isLocked
                 ? "border-zinc-100 bg-zinc-100 text-black shadow-[0_0_0_1px_rgba(255,255,255,0.24)]"
@@ -131,6 +133,9 @@ export default function HeroSection() {
             {isLocked ? "Back to Scroll" : "Tap to Lock"}
           </button>
         </div>
+        <p className="sr-only" aria-live="polite">
+          {isLocked ? "Scroll lock enabled" : "Scroll lock disabled"}
+        </p>
 
         <h1
           ref={logoRef}

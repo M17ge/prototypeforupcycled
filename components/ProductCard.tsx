@@ -122,7 +122,9 @@ export default function ProductCard({ title, category, description, image }: Pro
         <h3 ref={titleRef} className="mt-2 text-lg font-black uppercase tracking-[0.1em] text-zinc-100">
           {title}
         </h3>
-        <p className="mt-3 text-sm leading-6 text-zinc-300">{description}</p>
+        <p className="mt-3 text-sm leading-6 text-zinc-300" aria-label={description}>
+          {description}
+        </p>
       </div>
     </article>
   );
