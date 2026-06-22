@@ -7,9 +7,10 @@ import { Flip } from "gsap/Flip";
 
 gsap.registerPlugin(ScrollTrigger, Flip);
 
-const HERO_SCALE_TARGET = 5.2;
-const HERO_OPACITY_TARGET = 0.28;
-const CURSOR_SIZE = 240;
+const HERO_SCALE_TARGET = 4.9;
+const HERO_OPACITY_TARGET = 0.24;
+const BG_SCALE_TARGET = 1.22;
+const CURSOR_SIZE = 220;
 const CURSOR_HALF = CURSOR_SIZE / 2;
 
 export default function HeroSection() {
@@ -54,13 +55,13 @@ export default function HeroSection() {
             anticipatePin: 1,
           },
         })
-        .to(logo, { scale: HERO_SCALE_TARGET, opacity: HERO_OPACITY_TARGET, ease: "none" }, 0)
-        .to(bg, { scale: 1.18, filter: "brightness(1.15)", ease: "none" }, 0);
+        .to(logo, { scale: HERO_SCALE_TARGET, opacity: HERO_OPACITY_TARGET, yPercent: -6, letterSpacing: "0.18em", ease: "none" }, 0)
+        .to(bg, { scale: BG_SCALE_TARGET, filter: "brightness(1.2) contrast(1.08) saturate(1.1)", ease: "none" }, 0);
     }, section);
 
     const cursor = cursorRef.current;
-    const quickX = cursor ? gsap.quickTo(cursor, "x", { duration: 0.4, ease: "power3.out" }) : null;
-    const quickY = cursor ? gsap.quickTo(cursor, "y", { duration: 0.4, ease: "power3.out" }) : null;
+    const quickX = cursor ? gsap.quickTo(cursor, "x", { duration: 0.3, ease: "power4.out" }) : null;
+    const quickY = cursor ? gsap.quickTo(cursor, "y", { duration: 0.3, ease: "power4.out" }) : null;
 
     const onMove = (event: MouseEvent) => {
       if (!section || !quickX || !quickY) return;
@@ -92,10 +93,10 @@ export default function HeroSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen overflow-hidden border-b border-zinc-800 bg-black"
+      className="relative h-screen overflow-hidden border-b border-zinc-800/80 bg-black"
       style={{
         backgroundImage:
-          "radial-gradient(circle at var(--pointer-x,50%) var(--pointer-y,50%), rgba(255,255,255,0.22), rgba(0,0,0,0.96) 42%)",
+          "radial-gradient(circle at var(--pointer-x,50%) var(--pointer-y,50%), rgba(255,255,255,0.2), rgba(0,0,0,0.97) 44%)",
       }}
     >
       <div
@@ -106,11 +107,12 @@ export default function HeroSection() {
             "url('https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=2000&q=80')",
         }}
       />
-      <div className="absolute inset-0 bg-black/40" />
+      <div className="absolute inset-0 bg-black/50" />
+      <div className="pointer-events-none absolute inset-0 [background:linear-gradient(to_bottom,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.72)_100%)]" />
 
       <div
         ref={cursorRef}
-        className="pointer-events-none fixed left-0 top-0 z-40 h-60 w-60 rounded-full bg-white/10 blur-3xl"
+        className="pointer-events-none fixed left-0 top-0 z-40 h-56 w-56 rounded-full bg-white/12 opacity-70 mix-blend-screen blur-3xl"
       />
 
       <div className="relative z-20 flex h-full flex-col justify-between px-6 py-10 md:px-12">
@@ -120,10 +122,10 @@ export default function HeroSection() {
             ref={lockBadgeRef}
             type="button"
             onClick={handleLockToggle}
-            className={`border px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-all ${
+            className={`border px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] transition-all duration-300 ${
               isLocked
-                ? "border-zinc-100 bg-zinc-100 text-black"
-                : "border-zinc-400/70 bg-black/35 text-zinc-100 hover:border-zinc-100"
+                ? "border-zinc-100 bg-zinc-100 text-black shadow-[0_0_0_1px_rgba(255,255,255,0.24)]"
+                : "border-zinc-400/70 bg-black/45 text-zinc-100 hover:border-zinc-100 hover:bg-black/65"
             }`}
           >
             {isLocked ? "Back to Scroll" : "Tap to Lock"}
@@ -132,12 +134,12 @@ export default function HeroSection() {
 
         <h1
           ref={logoRef}
-          className="origin-center text-[18vw] font-black uppercase leading-[0.85] tracking-[0.08em] text-white mix-blend-screen md:text-[15vw]"
+          className="origin-center text-[18vw] font-black uppercase leading-[0.84] tracking-[0.1em] text-white mix-blend-screen md:text-[15vw]"
         >
           upcycl3d
         </h1>
 
-        <p className="max-w-lg text-sm uppercase tracking-[0.12em] text-zinc-200">
+        <p className="max-w-lg text-sm uppercase tracking-[0.12em] text-zinc-300">
           Customized denim architecture. Footwear interventions. Curated lifestyle hardware.
         </p>
       </div>

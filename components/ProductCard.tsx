@@ -11,15 +11,15 @@ type ProductCardProps = {
 };
 
 const TITLE_HOVER_Y = -10;
-const TITLE_HOVER_SCALE_FACTOR = 1.01;
-const META_HOVER_Y = -8;
-const HOVER_DURATION = 0.35;
-const MEDIA_SCALE = 1.05;
-const MEDIA_DURATION = 0.45;
-const ROTATE_X_STRENGTH = -12;
-const ROTATE_Y_STRENGTH = 14;
-const SHIFT_X_FACTOR = 0.05;
-const SHIFT_Y_FACTOR = 0.04;
+const TITLE_HOVER_SCALE_FACTOR = 1.02;
+const META_HOVER_Y = -7;
+const HOVER_DURATION = 0.4;
+const MEDIA_SCALE = 1.07;
+const MEDIA_DURATION = 0.5;
+const ROTATE_X_STRENGTH = -10;
+const ROTATE_Y_STRENGTH = 12;
+const SHIFT_X_FACTOR = 0.04;
+const SHIFT_Y_FACTOR = 0.03;
 
 export default function ProductCard({ title, category, description, image }: ProductCardProps) {
   const cardRef = useRef<HTMLElement>(null);
@@ -40,25 +40,34 @@ export default function ProductCard({ title, category, description, image }: Pro
     hoverTl
       .to(
         titleNode,
-        { y: TITLE_HOVER_Y, letterSpacing: "0.14em", scale: TITLE_HOVER_SCALE_FACTOR, duration: HOVER_DURATION, ease: "power3.out" },
+        { y: TITLE_HOVER_Y, letterSpacing: "0.14em", scale: TITLE_HOVER_SCALE_FACTOR, duration: HOVER_DURATION, ease: "power4.out" },
         0,
       )
-      .to(metaNode, { y: META_HOVER_Y, opacity: 0.95, duration: HOVER_DURATION, ease: "power3.out" }, 0)
-      .to(media, { scale: MEDIA_SCALE, duration: MEDIA_DURATION, ease: "power3.out" }, 0);
+      .to(metaNode, { y: META_HOVER_Y, opacity: 0.95, duration: HOVER_DURATION, ease: "power4.out" }, 0)
+      .to(media, { scale: MEDIA_SCALE, duration: MEDIA_DURATION, ease: "power4.out" }, 0);
 
-    const rotateX = gsap.quickTo(card, "rotationX", { duration: 0.35, ease: "power2.out" });
-    const rotateY = gsap.quickTo(card, "rotationY", { duration: 0.35, ease: "power2.out" });
-    const shiftX = gsap.quickTo(media, "x", { duration: 0.4, ease: "power2.out" });
-    const shiftY = gsap.quickTo(media, "y", { duration: 0.4, ease: "power2.out" });
+    const rotateX = gsap.quickTo(card, "rotationX", { duration: 0.3, ease: "power3.out" });
+    const rotateY = gsap.quickTo(card, "rotationY", { duration: 0.3, ease: "power3.out" });
+    const shiftX = gsap.quickTo(media, "x", { duration: 0.35, ease: "power3.out" });
+    const shiftY = gsap.quickTo(media, "y", { duration: 0.35, ease: "power3.out" });
 
-    const onEnter = () => hoverTl.play();
+    const onEnter = () => {
+      hoverTl.play();
+      gsap.to(card, {
+        y: -4,
+        boxShadow: "0 26px 70px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08)",
+        duration: 0.45,
+        ease: "power3.out",
+      });
+    };
     const onLeave = () => {
       hoverTl.reverse();
       rotateX(0);
       rotateY(0);
       shiftX(0);
       shiftY(0);
-      overlay.style.background = "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), rgba(0,0,0,0.72) 55%)";
+      overlay.style.background = "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18), rgba(0,0,0,0.76) 56%)";
+      gsap.to(card, { y: 0, boxShadow: "0 0 0 rgba(0,0,0,0)", duration: 0.45, ease: "power3.out" });
     };
 
     const onMove = (event: MouseEvent) => {
@@ -74,7 +83,7 @@ export default function ProductCard({ title, category, description, image }: Pro
       rotateY(rotateAmountY);
       shiftX((x - rect.width / 2) * SHIFT_X_FACTOR);
       shiftY((y - rect.height / 2) * SHIFT_Y_FACTOR);
-      overlay.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.36), rgba(0,0,0,0.78) 56%)`;
+      overlay.style.background = `radial-gradient(circle at ${px}% ${py}%, rgba(255,255,255,0.3), rgba(0,0,0,0.8) 57%)`;
     };
 
     card.addEventListener("mouseenter", onEnter);
@@ -93,7 +102,7 @@ export default function ProductCard({ title, category, description, image }: Pro
   return (
     <article
       ref={cardRef}
-      className="group relative overflow-hidden border border-zinc-700 bg-black perspective-distant"
+      className="group relative overflow-hidden border border-zinc-700/80 bg-black perspective-distant"
       style={{ transformStyle: "preserve-3d" }}
     >
       <div
@@ -104,9 +113,9 @@ export default function ProductCard({ title, category, description, image }: Pro
       <div
         ref={overlayRef}
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.22), rgba(0,0,0,0.72) 55%)" }}
+        style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.18), rgba(0,0,0,0.76) 56%)" }}
       />
-      <div className="relative z-10 border-t border-zinc-700 bg-black/70 p-5 backdrop-blur-sm">
+      <div className="relative z-10 border-t border-zinc-700/80 bg-black/72 p-5 backdrop-blur-sm">
         <p ref={metaRef} className="text-[0.65rem] uppercase tracking-[0.18em] text-zinc-300">
           {category}
         </p>

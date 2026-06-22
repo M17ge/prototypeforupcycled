@@ -50,12 +50,12 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="bg-zinc-950 text-zinc-100">
+    <main className="bg-zinc-950 text-zinc-100 antialiased">
       <HeroSection />
 
-      <section className="relative border-t border-zinc-800 px-6 py-24 md:px-12" id="on-the-rack">
+      <section className="relative border-t border-zinc-800/80 bg-zinc-950 px-6 py-24 md:px-12" id="on-the-rack">
         <div className="mb-10 flex items-end justify-between gap-6">
-          <h2 className="text-3xl font-black uppercase tracking-[0.14em]">On The Rack</h2>
+          <h2 className="text-3xl font-black uppercase tracking-[0.16em]">On The Rack</h2>
           <p className="max-w-md text-sm uppercase tracking-[0.1em] text-zinc-400">
             High-velocity drop layer built for denim, footwear and hardware pieces.
           </p>
@@ -67,11 +67,12 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t border-zinc-800 bg-zinc-900 px-6 py-28 md:px-12" id="off-the-grid">
-        <div className="pointer-events-none absolute inset-0 opacity-35 [background:radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_35%),radial-gradient(circle_at_75%_60%,rgba(255,255,255,0.12),transparent_32%)]" />
+      <section className="relative overflow-hidden border-t border-zinc-800/80 bg-zinc-900 px-6 py-28 md:px-12" id="off-the-grid">
+        <div className="pointer-events-none absolute inset-0 opacity-40 [background:radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.15),transparent_35%),radial-gradient(circle_at_75%_60%,rgba(255,255,255,0.12),transparent_32%)]" />
+        <div className="pointer-events-none absolute inset-0 [background:linear-gradient(to_bottom,rgba(0,0,0,0.12),rgba(0,0,0,0.4))]" />
         <div className="relative grid gap-12 lg:grid-cols-[1.2fr_1fr]">
           <div>
-            <h2 className="text-3xl font-black uppercase tracking-[0.14em]">Off The Grid</h2>
+            <h2 className="text-3xl font-black uppercase tracking-[0.16em]">Off The Grid</h2>
             <p className="mt-6 max-w-2xl text-base leading-7 text-zinc-300">
               A darker editorial lane focused on raw process: distressing, wash treatments, stitch recovery,
               and lifecycle transparency from discarded textile to final wearable artifact.
